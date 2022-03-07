@@ -1,0 +1,106 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: test-loxi-agent-ebpf
+  namespace: kube-system
+  labels:
+    kubernetes.io/os: linux
+    app: loxilight
+spec:
+  selector:
+    matchLabels:
+      app: loxilight
+  template:
+    metadata:
+      labels:
+        kubernetes.io/os: linux
+        app: loxilight
+    spec:
+      nodeSelector:
+        loxi-agent.withSmartNIC: "false"
+      hostNetwork: true
+      serviceAccountName: loxi-agent
+      terminationGracePeriodSeconds: 0
+      initContainers:
+      - name: test-init-loxi-cni-what
+        imagePullPolicy: Always
+        image: eyes852/test-init:0.1
+        volumeMounts:
+          - name: loxi-conf-dir
+            mountPath: /host/etc/loxilight
+          - name: loxi-cni-conf-dir
+            mountPath: /host/etc/cni/net.d
+          - name: loxi-cni-bin-dir
+            mountPath: /host/opt/cni/bin
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["NET_ADMIN", "NET_RAW"]
+        env:
+        - name: KUBERNETES_SERVICE_HOST
+          value: "127.0.0.1"
+        - name: KUBERNETES_SERVICE_PORT
+          value: "6443"
+      containers:
+      - name: loxi-agent
+        image: eyes852/test-loxi-agent:0.1
+        imagePullPolicy: Always
+        command:
+        - /usr/local/bin/loxi-agent
+        args:
+        - --config=/etc/loxilight/loxi-agent.conf
+        - --logtostderr=false
+        - --log_dir=/var/log/loxi-agent
+        - --alsologtostderr
+        - --log_file_max_size=100
+        - --log_file_max_num=4
+        - --v=0
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "50Mi"
+          limits:
+            cpu: "100m"
+            memory: "50Mi"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["NET_ADMIN", "NET_RAW"]
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        volumeMounts:
+        - name: loxi-conf-dir
+          mountPath: /etc/loxilight
+        - name: loxi-log-dir
+          mountPath: /var/log/loxi-agent
+        - name: loxi-netns
+          mountPath: /var/run/netns/loxilight
+      volumes:
+        # Used by calico/node.
+        - name: loxi-conf-dir
+          hostPath:
+            type: DirectoryOrCreate
+            path: /etc/loxilight
+        - name: loxi-cni-conf-dir
+          hostPath:
+            type: DirectoryOrCreate
+            path: /etc/cni/net.d
+        - name: loxi-cni-bin-dir
+          hostPath:
+            type: DirectoryOrCreate
+            path: /opt/cni/bin
+        - name: loxi-log-dir
+          hostPath:
+            type: DirectoryOrCreate
+            path: /var/log/loxi-agent
+        - name: loxi-netns
+          hostPath:
+            type: File
+            path: /var/run/netns/loxilight
