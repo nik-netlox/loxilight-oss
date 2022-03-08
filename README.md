@@ -2,7 +2,7 @@
 
 ![loxilight Logo](logos/color.png)
 
-## How it works
+## Overview
 
 Loxilight runs a small, single binary agent called `loxilightd` on each host, and is responsible for allocating a subnet lease to each host out of a larger, preconfigured address space.
 Loxilight uses either the Kubernetes API or [etcd][etcd] directly to store the network configuration, the allocated subnets, and any auxiliary data (such as the host's public IP).
@@ -107,6 +107,8 @@ $ kubectl patch node node1 -p '{"metadata":{"annotations":{"loxi-agent.endpointI
 * `loxi-agent.endpointIface=eth1` means that data plane interface name. This will be the egress interface for Pod overlay networking(VTEP)
 * `loxi-agent.localIP=10.0.0.100/24` means that original IP address of data plane interface.
 
+For further info about label & annotations within Loxilight, see Loxilight [Architecture](docs/design/architecture.md)
+
 ### Write CNI Plugin Configuration File
 All master/worker nodes which will have loxilight agent pods running on them must to have CNI Configurations. To configuire this to a node, write this:
 ```
@@ -189,6 +191,9 @@ $ ./mlnxofedinstall
 $ /etc/init.d/openibd restart
 ```
 > After this step, you will see Host PF/VF.
+
+## Roadmap
+We are adding features very quickly to Loxilight. Check out the list of features we are considering on our Roadmap [page](docs/roadmap.md). 
 
 ## Documentation
 - [Architecture](docs/design/architecture.md)
