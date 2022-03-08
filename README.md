@@ -98,7 +98,7 @@ Rolling restart pods :
 $ kubectl rollout restart deployment [deployment_name] -n kube-system
 ```
 
-### Label LOXILIGHT Node Candidates
+### Label Loxilight Node Candidates
 All master/worker nodes which will have loxilight agent pods running on them must be labelled with the Loxilight offloading type "loxi-agent.withSmartNIC". This label will be used as a selector by the loxilight Daemonset, which is deployed as a part of Loxilight data plane component installation. To add this label to a node, execute:
 ```
 $ kubectl patch node node1 -p '{"metadata":{"annotations":{"loxi-agent.endpointIface":[data plane interface],"loxi-agent.localIP":[IP address of data plane],"loxi-agent.loxiEndpointIface": "hs1", "loxi-agent.withSmartNIC": "false"},"labels":{"loxi-agent.withSmartNIC":[true|false]}}}'
@@ -125,20 +125,20 @@ $ vim loxilight.conf
 ```
 > `loxi-agent.withSmartNIC=true` means that this node installed with the supported DPU hardware and offloead. And the other will not use DPU offloading and just run on ebpf mode. `loxi-agent.withSmartNIC=false` is default mode.
 
-### Deploy LOXILIGHT Application Resources
+### Deploy Loxilight Application Resources
 Create RBAC Resources and Custom Resource Definitions
 ```
 $ kubectl apply -f https://github.com/netlox-dev/loxilight-oss/yaml/loxilight/loxi-agent-sa.yaml
 ```
 
-### Deploy LOXILIGHT Data Plane Agent
-Create LOXILIGHT Agent for container networking deployment according to CNI 
+### Deploy Loxilight Data Plane Agent
+Create Loxilight Agent for container networking deployment according to CNI 
 ```
 $ kubectl apply -f https://github.com/netlox-dev/loxilight-oss/yaml/loxilight/deploy-loxi-agent.yaml
 ```
 
-### Verify LOXILIGHT Agent DaemonSet
-Verify that the LOXILIGHT Agent DaemonSet has been correctly deployed. The reported Desired, Ready and Available instance counts should be equal, and should match the count of worker nodes which carry the label `loxi-agent.withSmartNIC=*`.
+### Verify Loxilight Agent DaemonSet
+Verify that the Loxilight Agent DaemonSet has been correctly deployed. The reported Desired, Ready and Available instance counts should be equal, and should match the count of worker nodes which carry the label `loxi-agent.withSmartNIC=*`.
 * Command
 ```
 $ kubectl get ds -n kube-system 
@@ -151,19 +151,19 @@ kube-system   loxi-agent-ebpf   4         4         4       4            4      
 ```
 
 ## UnInstallation
-### Uninstall LOXILIGHT Service
-Delete LOXILIGHT service running as daemon service in nodes
+### Uninstall Loxilight Service
+Delete Loxilight service running as daemon service in nodes
 ```
 $ apt remove loxilight
 ```
 
-### Uninstall LOXILIGHT Data Plane Agent
-Delete LOXILIGHT Agent for container networking deployment according to CNI 
+### Uninstall Loxilight Data Plane Agent
+Delete Loxilight Agent for container networking deployment according to CNI 
 ```
 $ kubectl delete -f https://github.com/netlox-dev/loxilight-oss/yaml/loxilight/deploy-loxi-agent.yaml
 ```
 
-### Uninstall LOXILIGHT Application Resources
+### Uninstall Loxilight Application Resources
 Delete RBAC Resources and Custom Resource Definitions
 ```
 $ kubectl delete -f https://github.com/netlox-dev/loxilight-oss/yaml/loxilight/loxi-agent-sa.yaml
