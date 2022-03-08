@@ -5,6 +5,8 @@ and is optimized for networking and security of a Kubernetes cluster. Its
 implementation leverages Kubernetes and Kubernetes native solutions as much as
 possible.
 
+<img src="../../images/pod-networking-1.PNG" width="300" alt="Loxilight Node Network">
+
 Antrea leverages Open vSwitch as the networking data plane. Open vSwitch is a
 high-performance programmable virtual switch that supports both Linux and
 Windows. Open vSwitch enables Antrea to implement Kubernetes Network Policies
@@ -27,8 +29,6 @@ and bandwidth CNI plugins. All Antrea Controller, Agent, OVS daemons, and
 `antrea-cni` bits are included in a single Docker image. Antrea also has a
 command-line tool called `antctl`, and an [Octant](https://github.com/vmware-tanzu/octant)
 UI plugin.
-
-<img src="../../images/arch.svg.png" width="600" alt="Antrea Architecture Overview">
 
 ### Antrea Agent
 
@@ -74,8 +74,6 @@ and creates a veth pair for each Pod, with one end being in the Pod's network
 namespace and the other connected to the loxilight bridge. These veths('hs1', 'hs2', ... 'hsx') are SR-IoV interfaces made by DPU(Current can make max 64 veths in Mellanox BF-II). Loxilight
 Agent also creates a tunnel port `tun0` which is for creating overlay
 tunnels to other Nodes.
-
-<img src="../../images/pod-networking-1.PNG" width="300" alt="Loxilight Node Network">
 
 <img src="../../images/node-1.PNG" width="600" alt="Loxilight Node-1 Network">
 
@@ -144,7 +142,7 @@ the destination endpoint is a local Pod, the packets will be forwarded to the
 Pod directly; if it is on another Node the packets will be sent to that Node via
 the tunnel.
 
-<img src="../../images/intra-service-1.PNG" width="600" alt="Antrea Service Traffic Walk" 6>
+<img src="../../images/intra-service-1.PNG" width="600" alt="Antrea Service Traffic Walk 6">
 
 <img src="../../images/inter-service-1.PNG" width="600" alt="Antrea Service Traffic Walk 7">
 
