@@ -2,7 +2,7 @@
 
 ## When loxilight agent run without loxilight namespace
 ---
-* Phenomenon - Output description of loxilight agent pod
+* Issue - Output description of loxilight agent pod
 ```
 Events:
   Type     Reason       Age                   From               Message
@@ -20,14 +20,10 @@ $ systemctl restart loxilight
 
 ## When loxilight route table informations mis-sync
 ---
-* Phenomenon - loxilight agent's status is Error
+* Issue - loxilight agent's status is Error
 
 * Solution - remove corrupted routing table informations and restart
 ```
 $ rm -rf /etc/loxilight/routev4
 $ systemctl restart loxilight
 ```
-
-
-
-

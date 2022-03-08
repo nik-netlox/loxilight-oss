@@ -82,9 +82,20 @@ Verify that Loxlight is installed correctly by running the `systemctl`. Verify t
 ```
 
 ## Loxilight Agent and CNI for Kubernetesion Installation Methods
-If user already installed other CNI agent. Need to do the rolling restart pods which are using cluster IPs.
+
+### Remove previous CNI, kube proxy and restart deployment
+If user already installed other CNI agent, Need to delete `CNI Agent`, `kube-proxy` and do the rolling restart pods which are using cluster IPs.
+
+Remove `Calico CNI` and `kube-proxy` : 
 ```
-$ kubectl rollout restart deployment [deployment_name]
+$ kubectl delete daemonset [calico_daemonset_name] -n kube-system
+$ kubectl delete deployment [calico_daemonset_name] -n kube-system 
+$ kubectl delete deployment [kube_proxy_daemonset_name] -n kube-system
+```
+
+Rolling restart pods :
+```
+$ kubectl rollout restart deployment [deployment_name] -n kube-system
 ```
 
 ### Label LOXILIGHT Node Candidates
@@ -180,8 +191,6 @@ $ /etc/init.d/openibd restart
 > After this step, you will see Host PF/VF.
 
 ## Documentation
-- [Installation (and releasing)](docs/installation.md)
+- [Architecture](docs/design/architecture.md)
 - [Configuration](docs/configuration.md)
-- [Backends](docs/backends.md)
-- [Running](docs/running.md)
 - [Troubleshooting](docs/troubleshooting.md)
