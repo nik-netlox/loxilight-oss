@@ -45,5 +45,6 @@ We are adding features very quickly to Loxilight. Check out the list of features
 - [Architecture](docs/design/architecture.md)
 - Installation
   - [Installing loxilight DP components on Nvidia BF2](docs/install_bf2.md)
+  - [Installing Kubernetes and loxiCNI] (docs/install_k8s.md)
 - [Configuration](docs/configuration.md)
 - [Troubleshooting](docs/troubleshooting.md)
