@@ -1,6 +1,6 @@
 # Loxilight Architecture
 
-Loxilight CNI Solution has been designed to have following crucial components:
+Loxilight has the following crucial components to provide users high-performance cloud-native performance at scale:
 1)	LoxiCNI
 2)	LoxiAgent
 3)	Loxilightd
@@ -8,33 +8,23 @@ Loxilight CNI Solution has been designed to have following crucial components:
 
 ![loxilight CNI](../../logos/LoxiCNI.png)
 
-
 LoxiCNI runs as part of Kubernetes CNI plugin binary and LoxiAgent runs as a DaemonSet in the Kubernetes environment. That DaemonSet includes an init container that installs the CNI plugin-LoxiCNI on every node. Loxilight runs in eBPF mode in the Host Server when the bare-metal server has a regular NIC. But it can run in the DPU environment as well when the Host Server has a DPU installed. LoxiAgent and LoxiCNI are included in a single Docker image. Loxilight comes as a deb package and can be installed with dpkg command. It also has a native cli – “llcli”.
 
-Loxilight leverages DPU & eBPF as the networking data plane. The A DPU is a new class of programmable processor that 
-combines two key elements(High-Performance, Software Programmable multi-core CPU). The eBPF is a revolutionary technology that 
-can run sandboxed programs in the Linux kernel without changing kernel source code or loading a kernel module.
-The programmability of eBPF enables adding additional protocol parsers and easily program 
-any forwarding logic to meet changing requirements without ever leaving the packet processing context of the Linux kernel.
+Loxilight leverages DPU & eBPF as the networking data plane. A DPU is a new class of programmable processor that combines two key elements(High-Performance, Software Programmable multi-core CPU). The eBPF is a revolutionary technology that can run sandboxed programs in the Linux kernel without changing kernel source code or loading a kernel module. The programmability of eBPF enables adding additional protocol parsers and easily program any forwarding logic to meet changing requirements without ever leaving the packet processing context of the Linux kernel. 
 
-Thanks to the "perforamce and programmability" characteristic of DPU and eBPF, Loxilight is able to implement an extensive set
-of networking and security features and services on top of DPU and eBPF.
+Thanks to the "performance and programmability" provided by DPU and eBPF, Loxilight is able to implement an extensive set of networking and security features and services. 
 
-Some information in this document and in particular when it comes to the Loxilight Agent is specific to running Loxilight in a kubernetes cluster. 
-For information about how Loxilight is run on bare metal server, please refer our [blog](https://netlox.medium.com/).
+### Component Information
 
-## Components
+As shown in the above figure, Loxilight consists of multiple components. 
 
-In a Kubernetes cluster, Loxilight creates a DaemonSet that includes one container to run Loxilight Agent
- on every Node. The DaemonSet also includes an init container that installs the CNI plugin - `loxilight-cni` - on the Node and
-ensures that the loxilight service is loaded. 
-User need to install whole loxilight services on the Node, please refer [doc](https://github.com/netlox-dev/loxilight-oss)
+### Loxilightd
 
-### Loxilight daemons
+Loxilightd runs as light weight daemon and contains runtime control channel for various data-planes supported by Loxilight (eBPF/DPU) etc. It opens up a [nanomsg](https://nanomsg.org)  based high performance communication channel to hook up with various Kubernetes and other control plane components like CNI, LoxiAgent as well as CLI. It also uses a proprietary compiler driven technology to support various data-plane backends. 
 
-The one loxiligh service daemons - `loxilight` run in a host server.
+Loxilightd also contains its own custom eBPF loader to load the loxilight eBPF data-plane and other DPU data-plane components.
 
-### Loxilight Agent
+
 
 Loxilight Agent manages the Pod interfaces and implements Pod networking with eBPF & DPU on every Kubernetes Node. 
 If there is no DPU, it will implemnt pure eBPF software based.
