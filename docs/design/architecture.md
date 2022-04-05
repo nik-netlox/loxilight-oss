@@ -15,7 +15,7 @@ Loxilight leverages DPU & eBPF as the networking data plane. A DPU is a new clas
 
 Thanks to the "performance and programmability" provided by DPU and eBPF, Loxilight is able to implement an extensive set of networking and security features and services. 
 
-### Component Information
+## Loxilight Components
 
 As shown in the above figure, Loxilight consists of multiple components. 
 
