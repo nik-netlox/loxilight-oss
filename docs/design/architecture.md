@@ -1,7 +1,15 @@
 # Loxilight Architecture
 
-Loxilight is designed to be Standalone(Network function offloading) and Kubernetes-native. It focuses on
-and is optimized for networking and security with DPU(Data Processing Unit) & eBPF. Thi 
+Loxilight CNI Solution has been designed to have following crucial components:
+1)	LoxiCNI
+2)	LoxiAgent
+3)	Loxilightd
+4)	Datapath(eBPF/DPU)
+
+![loxilight CNI](logos/loxiCNI.png)
+
+
+LoxiCNI runs as part of Kubernetes CNI plugin binary and LoxiAgent runs as a DaemonSet in the Kubernetes environment. That DaemonSet includes an init container that installs the CNI plugin-LoxiCNI on every node. Loxilight runs in eBPF mode in the Host Server when the bare-metal server has a regular NIC. But it can run in the DPU environment as well when the Host Server has a DPU installed. LoxiAgent and LoxiCNI are included in a single Docker image. Loxilight comes as a deb package and can be installed with dpkg command. It also has a native cli – “llcli”.
 
 Loxilight leverages DPU & eBPF as the networking data plane. The A DPU is a new class of programmable processor that 
 combines two key elements(High-Performance, Software Programmable multi-core CPU). The eBPF is a revolutionary technology that 
