@@ -14,7 +14,7 @@ Currently, BF2 is one of the leading DPUs available. Loxilight fully supports Bl
 
 ![ebpf](photos/bf2.png)
 
-The BlueField architecture is a combination of two preexisting standard off-the-shelf components, Arm AArch64 processors, and ConnectX-5 (for BlueField), ConnectX-6 Dx (for BlueField-2), or network controller, each with its own rich software ecosystem. As such, almost any of the programmer-visible software interfaces in BlueField come from existing standard interfaces for the respective components.
+The BlueField architecture is a combination of two preexisting standard off-the-shelf components, Arm Arch64 processors, and ConnectX-5 (for BlueField), ConnectX-6 Dx (for BlueField-2), or network controller, each with its own rich software ecosystem. As such, almost any of the programmer-visible software interfaces in BlueField come from existing standard interfaces for the respective components.
 
 Kubernetes security is an immense challenge comprised of many highly interrelated parts. The shift from a monolithic model to today’s prominent microservices architecture has completely transformed the way enterprises ship applications at scale. At the same time, cloud-native applications generate intensive data movements between services and physical machines to satisfy a single application request.
 The amount of traffic and latency requirements often prohibit the use of zero-trust security solutions to avoid the risk of impacting application performance. Thus, this creates inherent challenges within the enterprise for both the DevOps team, whose task is to ensure high-quality application delivery, and the security team, whose primary goal is to protect customer data and privacy.
