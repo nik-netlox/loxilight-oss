@@ -26,4 +26,6 @@ Now, eBPF changes all of this. eBPF is hosted inside the kernel so the biggest a
 
 At NetLOX, we developed an extremely scalable eBPF stack “Loxilight” from scratch which can hook up either as XDP or TC-eBPF.  Loxilight acts as a fast-path on top of Linux networking stack and closely mimics a hardware-like data-path pipeline.  In other words, it simply accelerates Linux networking stack without ripping apart the existing software landscape. Linux kernel continues to act as “slow-path” whenever Loxilight encounters a packet out of its scope of operation.  Loxilight also implements its own conntrack, stateful firewall/NAT, DDOS handling, Load-balancer on top of its eBPF stack to scale connections upto a million entries. We further made sure that tools like iptables work transparently with loxilight. 
 
+Loxilight is geared to enhance performance in cloud-native environments but as evident from this post, it can be used in potentially any server(or user) networking use-case. Apart from top-notch performance, it has great programmability and visibility since it inherits these traits from underlying eBPF technology and enhances it with its incredible architecture
+
 
