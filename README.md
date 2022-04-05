@@ -17,7 +17,7 @@ There are number of [CNIs](https://github.com/containernetworking/cni) available
 ## Compatibility Matrix 
 
 ### Host OS requirements
-To install LOXILIGHT Packages, you need the 64-bit version of one of these Ubuntu versions:
+To install Loxilight software packages, you need the 64-bit version of one of these OS versions:
 * Ubuntu Focal 20.04(LTS)
 * Ubuntu Hirsute 21.04
 * RockyOS (Planned)
