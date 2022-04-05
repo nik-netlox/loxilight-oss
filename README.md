@@ -4,6 +4,11 @@
 
 ## Overview
 
+Cloud-native Network functions (CNFs) are the evolution of how network functions are built using micro-service architecture. The following figure shows the evolutionary journey of network functions thus far:
+
+![loxilight Logo](logos/CNF.png)
+
+
 Loxilight runs a small, single binary agent called `loxilightd` on each host, and is responsible for allocating a subnet lease to each host out of a larger, preconfigured address space.
 Loxilight uses either the Kubernetes API or [etcd][etcd] directly to store the network configuration, the allocated subnets, and any auxiliary data (such as the host's public IP).
 Packets are forwarded using one of several [backend mechanisms][backends] including VXLAN and various cloud integrations.
