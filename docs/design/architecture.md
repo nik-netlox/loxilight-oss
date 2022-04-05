@@ -1,10 +1,11 @@
 # Loxilight Architecture
 
 Loxilight has the following crucial components to provide users high-performance cloud-native performance at scale:
-1)	LoxiCNI
-2)	LoxiAgent
-3)	Loxilightd
-4)	Datapath(eBPF/DPU)
+
+1)	loxilightd
+2)	loxiDP (eBPF/DPU)
+3)	loxiCNI
+4)	loxiAgent
 
 ![loxilight CNI](../../logos/LoxiCNI.png)
 
@@ -18,13 +19,13 @@ Thanks to the "performance and programmability" provided by DPU and eBPF, Loxili
 
 As shown in the above figure, Loxilight consists of multiple components. 
 
-### Loxilightd
+### loxilightd
 
-Loxilightd runs as light weight daemon and contains runtime control channel for various data-planes supported by Loxilight (eBPF/DPU) etc. It opens up a [nanomsg](https://nanomsg.org)  based high performance communication channel to hook up with various Kubernetes and other control plane components like CNI, LoxiAgent as well as CLI. It also uses a proprietary compiler driven technology to support various data-plane backends. 
+loxilightd runs as light weight daemon and contains runtime control channel for various data-planes supported by Loxilight (eBPF/DPU) etc. It opens up a [nanomsg](https://nanomsg.org)  based high performance communication channel to hook up with various Kubernetes and other control plane components like loxiCNI, loxiAgent as well as CLI. It also uses a proprietary compiler driven technology to support various data-plane backends. 
 
-Loxilightd also contains its own custom eBPF loader to load the loxilight eBPF data-plane and other DPU data-plane components.
+loxilightd also contains its own custom eBPF loader to load the loxilight eBPF data-plane and other DPU data-plane components.
 
-### Loxilight data-plane(s) 
+### loxilight DP (s) 
 
 #### 1. eBPF data-plane
 
@@ -57,13 +58,15 @@ Loxilight Agent includes one Kubernetes controllers:
 - The Node controller watches the Kubernetes API server for new Nodes, and
 creates an overlay (Geneve / VXLAN / GRE / STT) tunnel to each remote Node.
 
-### loxilight-cni 
+### loxiCNI 
 
-`loxilight-cni` is the [CNI](https://github.com/containernetworking/cni) plugin 
-binary of loxilight. It is executed by `kubelet` for each CNI command. It is a 
-simple gRPC client which issues an RPC to loxilight Agent for each CNI command. The 
-Agent performs the actual work (sets up networking for the Pod) and returns the
-result or an error to `loxilight-cni`. 
+Customizing Kubernetes network functions may require detecting the creation/delete event of Pod for each Pod and controlling the creation/delete of the Pod's network interface. This is because to connect the pod's network interface to a customized network, it is necessary to manage the information on the pod.
+
+The CNI plug-in connects to the network when a container is created and removes resources allocated to the container when the container is deleted. Kubernetes searches for the CNI plug-in to use, and then executes the CNI plug-in when a pod is generated.
+
+`loxiCNI` works at the top of the chain. It runs as a plugin in Kubernetes environment, and it is executed by kubelet for each CNI command. Its job is to handle Pod addition and deletion. When the Pod is spawned, LoxiCNI API is invoked and then it assigns pod the interface, IP address, necessary routes and manages MTU too. LoxiCNI is responsible for connecting the Pod to the Loxilight so that Loxilight can manage its data path.
+
+### 
 
 ## Pod Networking
 
