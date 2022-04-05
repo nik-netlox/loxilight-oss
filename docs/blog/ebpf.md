@@ -14,6 +14,16 @@ Coming back to the focus of our discussion which is of course performance, let u
 
 ![linux networking](photos/linux.png)
 
+The point is it has become incredibly complex over the years. Once features like NAT, VXLAN, conntrack etc come into play, Linux networking stops scaling due to cache degradation, lock contention etc.  
 
+## One problem leads to the another 
+
+To avoid performance penalties, many user-space frameworks like DPDK have been widely used, which completely skip the linux kernel networking and directly process packets in the user-space. As simple as that may sound, there are some serious drawbacks in using such frameworks e.g need to dedicate cores (can’t multitask), applications written on a specific user-space driver (PMD) might not run on another as it is, apps are also rendered incompatible across different DPDK releases frequently. Finally, there is a need to redo various parts of the TCP/IP stack and the provisioning involved. In short, it leads to a massive and completely unnecessary need of reinventing the wheel.  We will have a detailed post later to discuss these factors. But for now, in short, if we are looking to get more out of a box than doing only networking, DPDK is not the right choice. In the age of distributed edge computing and immersive metaverse, the need to do more out of less is of utmost importance. 
+
+## eBPF comes to the rescue
+
+Now, eBPF changes all of this. eBPF is hosted inside the kernel so the biggest advantage of eBPF is it can co-exist with Linux/OS without the need of using dedicated cores, skipping the Kernel stack or breaking tools used for ages by the community. 
+
+At NetLOX, we developed an extremely scalable eBPF stack “Loxilight” from scratch which can hook up either as XDP or TC-eBPF.  Loxilight acts as a fast-path on top of Linux networking stack and closely mimics a hardware-like data-path pipeline.  In other words, it simply accelerates Linux networking stack without ripping apart the existing software landscape. Linux kernel continues to act as “slow-path” whenever Loxilight encounters a packet out of its scope of operation.  Loxilight also implements its own conntrack, stateful firewall/NAT, DDOS handling, Load-balancer on top of its eBPF stack to scale connections upto a million entries. We further made sure that tools like iptables work transparently with loxilight. 
 
 
