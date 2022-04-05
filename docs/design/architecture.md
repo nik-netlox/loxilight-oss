@@ -66,7 +66,9 @@ The CNI plug-in connects to the network when a container is created and removes 
 
 `loxiCNI` works at the top of the chain. It runs as a plugin in Kubernetes environment, and it is executed by kubelet for each CNI command. Its job is to handle Pod addition and deletion. When the Pod is spawned, LoxiCNI API is invoked and then it assigns pod the interface, IP address, necessary routes and manages MTU too. LoxiCNI is responsible for connecting the Pod to the Loxilight so that Loxilight can manage its data path.
 
-### 
+### loxiAgent
+
+LoxiAgent is the glue layer between Kubernetes and Loxilight. It handles various functions like Tunnel Management, End-Point Management, Service Management, QoS enforcement or security policy enforcement. LoxiAgent listens to Kubernetes Controllers to set up all the networking and security policies for the Pod on each node. For instance, LoxiAgent watches TunnelController to setup tunnels for Pod-to-pod connectivity on the other nodes and it watches EndPointController to set a flow for forwarding the traffic using serviceIP as destination with all possible endpoints IPs and ports. loxilightd and loxiDPs will then use LoadBalancer, do DNAT and connection tracking and forwards the packets to one of the endpoints
 
 ## Pod Networking
 
