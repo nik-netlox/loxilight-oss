@@ -14,14 +14,17 @@ Loxilight is based on [eBPF](https://www.netlox.io/post/cloud-networking-with-eb
 
 There are number of [CNIs](https://github.com/containernetworking/cni) available in the market which uses stock Linux, iptables etc. They all work fine until they hit the scale and performance bottlenecks. Loxilight solution unleashes the benefits of eBPF and DPU to be used for high performance and ultra-low latency Cloud Native networking.
 
-## System Requirements
+## Compatibility Matrix 
 
-### Linux host requirements
+### Host OS requirements
 To install LOXILIGHT Packages, you need the 64-bit version of one of these Ubuntu versions:
 * Ubuntu Focal 20.04(LTS)
 * Ubuntu Hirsute 21.04
+* RockyOS (Planned)
+* Enterprise Redhat (Planned)
+* Windows Server(Planned)
 
-### Requirements
+### Linux Kernel Requirements
 * Linux Kernel Version >= 5.1.0
 
 ### Compatible DPU Lists
@@ -199,5 +202,8 @@ We are adding features very quickly to Loxilight. Check out the list of features
 
 ## Documentation
 - [Architecture](docs/design/architecture.md)
+- [Installation]
+  - [Installing loxilight DP components on Nvidia BF2](docs/install_bf2.md)
+  - [Installing Kubernetes and loxiCNI] (docs/install_ks8s.md)
 - [Configuration](docs/configuration.md)
 - [Troubleshooting](docs/troubleshooting.md)
