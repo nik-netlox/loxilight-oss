@@ -24,6 +24,9 @@ Loxilightd runs as light weight daemon and contains runtime control channel for 
 
 Loxilightd also contains its own custom eBPF loader to load the loxilight eBPF data-plane and other DPU data-plane components.
 
+### Loxilight data-plane(s) 
+
+- [What is eBPF](../blog/ebpf.md)
 
 
 Loxilight Agent manages the Pod interfaces and implements Pod networking with eBPF & DPU on every Kubernetes Node. 
