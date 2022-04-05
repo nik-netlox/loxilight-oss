@@ -38,6 +38,8 @@ The following figure shows a sample loxilight topology employing eBPF data-plane
 
 #### 2. Multi-vendor DPU data-plane
 
+- [What is a DPU](../blog/dpu.md)
+
 As explained earlier, loxilightd supports multiple backend runtimes and hence can easily support DPU based data-plane using [DOCA SDK](https://developer.nvidia.com/networking/doca) or any other underlying data-plane scheme without need for any change to upper layers. Various features supported by Loxilight-eBPF can be fully or partially offloaded to DPUs thereby providing unprecedented flexibility, effeciency and performance for networking computing functions.
 
 ![Loxilight-ebpf](../../images/dpudp.png)
