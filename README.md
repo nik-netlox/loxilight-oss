@@ -8,16 +8,11 @@ Cloud-native Network functions (CNFs) are the evolution of how network functions
 
 ![loxilight Logo](logos/CNF.png)
 
+CNI (or cloud-native networking interface) plays a very important role in deployment of data-intensive CNFs since CNI decides how network communication happens between the CNFs inside the same node or across multiple nodes of a same K8s cluster. CNI intercepts all packets between CNFs in-line and applies security and networking policies to them. There are many CNIs to choose from depending on the use-case but when bandwidth of 10Gbps or more is needed per CNF, we need to carefully select the CNI to ensure optimal performance. 
 
-Loxilight runs a small, single binary agent called `loxilightd` on each host, and is responsible for allocating a subnet lease to each host out of a larger, preconfigured address space.
-Loxilight uses either the Kubernetes API or [etcd][etcd] directly to store the network configuration, the allocated subnets, and any auxiliary data (such as the host's public IP).
-Packets are forwarded using one of several [backend mechanisms][backends] including VXLAN and various cloud integrations.
+Loxilight is based on [eBPF](https://www.netlox.io/post/cloud-networking-with-ebpf) technology. It works either as a pure eBPF mode or in a hybrid-mode with multi-vendor DPU support when DPU units are available. As a matter of fact, it is one of the first CNI to provide such a hybrid mode of operation working seamlessly in both eBPF mode (generic) and multi-vendor DPU mode while providing hyperscale performance of 40G or more per server node.
 
-Run the latest version of the Loxilight with Kubernetes.
-
-It gives you the ability to make a hardware accelerated CNI newtorking with ebpf and DPU offloading.
-
-> The Docker images backing this stack include Loxilight with paid features enabled by default. The trial license is valid for 60 days. For the purchasement of license, contact us please (contact@netlox.io)
+There are number of [CNIs](https://github.com/containernetworking/cni) available in the market which uses stock Linux, iptables etc. They all work fine until they hit the scale and performance bottlenecks. Loxilight solution unleashes the benefits of eBPF and DPU to be used for high performance and ultra-low latency Cloud Native networking.
 
 ## System Requirements
 
@@ -27,16 +22,18 @@ To install LOXILIGHT Packages, you need the 64-bit version of one of these Ubunt
 * Ubuntu Hirsute 21.04
 
 ### Requirements
-* Kubernetes must be configured to use CNI 
 * Linux Kernel Version >= 5.1.0
 
 ### Compatible DPU Lists
 * NVIDIA Mellanox Bluefield-II
+* Intel Mount Evans DPU (Planned)
+* Pensando DSC (Planned)
 
-### Compatible Kubernete Versions
+### Compatible Kubernetes Versions
 * Kubernetes 1.19
 * Kubernetes 1.20
 * Kubernetes 1.21
+* Kubernetes 1.22
 
 ## Loxilight Service Installation Methods
 You can install Loxilight in different ways, depending on your needs:
