@@ -14,6 +14,14 @@ Loxilight is based on [eBPF](https://www.netlox.io/post/cloud-networking-with-eb
 
 There are number of [CNIs](https://github.com/containernetworking/cni) available in the market which uses stock Linux, iptables etc. They all work fine until they hit the scale and performance bottlenecks. Loxilight solution unleashes the benefits of eBPF and DPU to be used for high performance and ultra-low latency Cloud Native networking.
 
+## Documentation
+- [Architecture](docs/design/architecture.md)
+- Installation
+  - [Installing loxilight DP components on Nvidia BF2](docs/install_bf2.md)
+  - [Installing Kubernetes and loxiCNI](docs/install_k8s.md)
+- [Configuration](docs/configuration.md)
+- [Troubleshooting](docs/troubleshooting.md)
+
 ## Compatibility Matrix 
 
 ### Host OS requirements
@@ -40,11 +48,3 @@ To install Loxilight software packages, you need the 64-bit version of one of th
 
 ## Roadmap
 We are adding features very quickly to Loxilight. Check out the list of features we are considering on our Roadmap [page](docs/roadmap.md). 
-
-## Documentation
-- [Architecture](docs/design/architecture.md)
-- Installation
-  - [Installing loxilight DP components on Nvidia BF2](docs/install_bf2.md)
-  - [Installing Kubernetes and loxiCNI](docs/install_k8s.md)
-- [Configuration](docs/configuration.md)
-- [Troubleshooting](docs/troubleshooting.md)
