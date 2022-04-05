@@ -26,15 +26,21 @@ Loxilightd also contains its own custom eBPF loader to load the loxilight eBPF d
 
 ### Loxilight data-plane(s) 
 
-1. eBPF Dataplane
+#### 1. eBPF data-plane
 
 In its default configuration, loxilight works on top of its highly scalable eBPF data-plane. Written from scratch, it  can hook up either as XDP or TC-eBPF or both at the same time. Loxilight-ebpf acts as a fast-path on top of Linux networking stack and closely mimics a hardware-like data-path pipeline. In other words, it simply accelerates Linux networking stack without ripping apart the existing software landscape. Linux kernel continues to act as “slow-path” whenever Loxilight encounters a packet out of its scope of operation. Loxilight also implements its own conntrack, stateful firewall/NAT, DDOS handling, Load-balancer on top of its eBPF stack to scale connections up to a million entries.
 
-- [Why eBPF](../blog/ebpf.md)
+- [Why we need eBPF](../blog/ebpf.md)
+
+The following figure shows a sample loxilight topology employing eBPF data-plane
 
 ![Loxilight-ebpf](../../images/ebpfdp.png)
 
-2. Multi-vendor DPU dataplane
+#### 2. Multi-vendor DPU data-plane
+
+As explained earlier, loxilightd supports multiple backend runtimes and hence can easily support DPU based data-plane using [DOCA SDK](https://developer.nvidia.com/networking/doca) or any other underlying data-plane scheme without need for any change to upper layers. Various features supported by Loxilight-eBPF can be fully or partially offloaded to DPUs thereby providing unprecedented flexibility, effeciency and performance for networking computing functions.
+
+![Loxilight-ebpf](../../images/dpudp.png)
 
 
 
